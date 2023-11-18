@@ -41,29 +41,29 @@ struct People {
 }
 
 fn manual_input_sorting() {
-    let mut people: Vec<Person> = Vec::new(); // vector storing Persons
+    let mut people: Vec<Person> = Vec::new();
     'grand: loop {
         let mut p_name = String::new();
         'confirmation: loop {
-            println!(r#"Please input the object name or "sort" to sort added objects:"#); // input name
+            println!(r#"Please input the object name or "sort" to sort added objects:"#);
             io::stdin()
                 .read_line(&mut p_name)
                 .expect("Failed to read input");
             if p_name.trim() == "sort" {break 'grand;}
             loop {
-                println!("Value read: {} \nIs that correct? (Y/n)", p_name); // input response
+                println!("Value read: {} \nIs that correct? (Y/n)", p_name);
                 let mut response = String::new();
                     io::stdin()
                     .read_line(&mut response)
                     .expect("Failed to read your response");
                 match response.trim() {
-                    "Y" => { // if that then end the 'confiramtion loop and proceed to Person creation
+                    "Y" => {
                         response.clear();
-                        let cleaned_name = p_name.trim().lines(); // rid p_name of newline characters
+                        let cleaned_name = p_name.trim().lines();
                         p_name = cleaned_name.collect();
                         break 'confirmation;
                     },
-                    "n" => { // if that then break loop and ask for name again
+                    "n" => { 
                         p_name.clear();
                         response.clear();
                         break; 
@@ -91,7 +91,7 @@ fn read_sort_xml() {
         let mut data_file_path: String = String::new();
         io::stdin().read_line(&mut data_file_path).expect("Failed to read file path");
         let data_file_path = Path::new(data_file_path.trim());
-        match (data_file_path.exists() && data_file_path.is_file()) && data_file_path.extension().and_then(std::ffi::OsStr::to_str) == Some("xml"){ // CHECK WHETHER IT WORKS
+        match (data_file_path.exists() && data_file_path.is_file()) && data_file_path.extension().and_then(std::ffi::OsStr::to_str) == Some("xml"){
             true => {
                 let mut file = File::open(data_file_path).expect("Failed to open file");
                 let mut xml_content = String::new();
@@ -117,7 +117,7 @@ fn read_sort_txt() -> io::Result<()> {
         let mut data_file_path: String = String::new();
         io::stdin().read_line(&mut data_file_path).expect("Failed to read file path");
         let data_file_path = Path::new(data_file_path.trim());
-        match (data_file_path.exists() && data_file_path.is_file()) && data_file_path.extension().and_then(std::ffi::OsStr::to_str) == Some("txt"){ // CHECK WHETHER IT WORKS
+        match (data_file_path.exists() && data_file_path.is_file()) && data_file_path.extension().and_then(std::ffi::OsStr::to_str) == Some("txt"){
             true => {
                 let file = File::open(data_file_path).expect("Failed to open file");
                 let buf_reader = BufReader::new(file);
@@ -154,7 +154,7 @@ fn read_sort_txt() -> io::Result<()> {
     }
 }
 
-fn sort_given_vector(mut vector: Vec<Person>) -> Vec<Person> { // sorting function, for now uses the sort_by_key function
+fn sort_given_vector(mut vector: Vec<Person>) -> Vec<Person> {
     vector.sort_by_key(|person| person.attribute1_i32);
 
     vector
